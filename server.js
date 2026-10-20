@@ -7,6 +7,8 @@ const app = express();
 // The fallback is useful when running locally.
 const PORT = process.env.PORT || 3000;
 
+const {sum} = require("./utils/sum");
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -29,6 +31,14 @@ app.get("/api/users", (req, res) => {
     { id: 2, name: "Alex" },
   ]);
 });
+
+app.get("/sum/:a/:b", async (req, res) => {
+  const {a, b} = req.params;
+
+  res.status(200).json({
+    ans: sum(parseInt(a), parseInt(b))
+  });
+})
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server listening on port ${PORT}`);
